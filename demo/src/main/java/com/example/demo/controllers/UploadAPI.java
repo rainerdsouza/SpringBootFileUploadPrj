@@ -26,18 +26,18 @@ public class UploadAPI {
 
 	
 	 @RequestMapping("/upload")
-	    public String hello(Model model, @RequestParam(defaultValue="World") MultipartFile file) {
+	    public String hello(Model model, MultipartFile file) {
 	        model.addAttribute("file", file);
      
-        	 
-        	if(!file.isEmpty()){
-        		
+        	 System.out.println("***********************************");
+        	if(file != null && !file.isEmpty()){
+        		System.out.println("***********************************");
             	// A service class can be created to handle all of this. 
         		//I put all the logic in the controller due to time constraint
         		
 	        try {
         		byte[] bytes = file.getBytes();
-        	    Path path = Paths.get("C://temp//"+ file.getOriginalFilename()) ;
+        	    Path path = Paths.get("src/main/resources/"+ file.getOriginalFilename()) ;
         		Files.write(path, bytes);	
 				BasicFileAttributes attr = Files.readAttributes(path, BasicFileAttributes.class);
 				FileOwnerAttributeView ownerAttributeView = Files.getFileAttributeView(path, FileOwnerAttributeView.class);
@@ -57,10 +57,10 @@ public class UploadAPI {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-	        return "File " + file.getOriginalFilename()+ " Has been Succesfully Uploaded.";
+	        return "File Has been Succesfully Uploaded.";
 	    }
         	else{
-        		
+        		System.out.println("---------------------------------------");
         		return "Please Select a File to upload";
         	}
 	 }
